@@ -93,7 +93,7 @@ class PluginGlobalpay extends GatewayPlugin
                                         "value"         =>"0"
                                        ),
                    /*T*/"Check CVV2"/*/T*/ => array (
-                                        "type"          =>"yesno",
+                                        "type"          =>"hidden",
                                         "description"   =>/*T*/"Select YES if you want to accept CVV2 for this plugin."/*/T*/,
                                         "value"         =>"1"
                                        )
