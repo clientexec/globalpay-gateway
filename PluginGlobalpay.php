@@ -12,89 +12,89 @@ class PluginGlobalpay extends GatewayPlugin
     function getVariables()
     {
         $variables = array (
-                   /*T*/"Plugin Name"/*/T*/ => array (
+                   lang("Plugin Name") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>/*T*/"How CE sees this plugin (not to be confused with the Signup Name)"/*/T*/,
-                                        "value"         =>/*T*/"Global Payments"/*/T*/
+                                        "description"   =>lang("How CE sees this plugin (not to be confused with the Signup Name)"),
+                                        "value"         =>lang("Global Payments")
                                        ),
-                   /*T*/"Global User Name"/*/T*/ => array (
+                   lang("Global User Name") => array (
                                         "type"          =>"text",
-                                        "description"   =>/*T*/"User name used to identify you to globalpay.com.<br>NOTE: This user name is required if you have selected Global Payments as a payment gateway for any of your clients."/*/T*/,
+                                        "description"   =>lang("User name used to identify you to globalpay.com.<br>NOTE: This user name is required if you have selected Global Payments as a payment gateway for any of your clients."),
                                         "value"         =>""
                                        ),
-                   /*T*/"Global Password"/*/T*/ => array (
+                   lang("Global Password") => array (
                                         "type"          =>"text",
-                                        "description"   =>/*T*/"Password used to identify you to globalpay.com.<br>NOTE: This password is required if you have selected Global Payments as a payment gateway for any of your clients."/*/T*/,
+                                        "description"   =>lang("Password used to identify you to globalpay.com.<br>NOTE: This password is required if you have selected Global Payments as a payment gateway for any of your clients."),
                                         "value"         =>""
                                        ),
-                   /*T*/"Global Environment Name"/*/T*/ => array (
+                   lang("Global Environment Name") => array (
                                         "type"          =>"text",
-                                        "description"   =>/*T*/"The Global Transport Certification environment's domain name is currently <b>https://certapia.globalpay.com</b></br>After certifying and when processing live transactions, the domain name must be changed in the integrated application to reflect the production environment's domain name.</br>After your certification is complete, contact Global Payments to receive the production domain name.</br>The value required in this field is to replace the <b><font color=blue>&lt;environment&gt;</font></b> tag on <b>https://<font color=blue>&lt;environment&gt;</font>.globalpay.com</b></br>Your certification system firewall must allow connection to both <b>172.31.31.59</b> and <b>172.31.12.81</b>"/*/T*/,
+                                        "description"   =>lang("The Global Transport Certification environment's domain name is currently <b>https://certapia.globalpay.com</b></br>After certifying and when processing live transactions, the domain name must be changed in the integrated application to reflect the production environment's domain name.</br>After your certification is complete, contact Global Payments to receive the production domain name.</br>The value required in this field is to replace the <b><font color=blue>&lt;environment&gt;</font></b> tag on <b>https://<font color=blue>&lt;environment&gt;</font>.globalpay.com</b></br>Your certification system firewall must allow connection to both <b>172.31.31.59</b> and <b>172.31.12.81</b>"),
                                         "value"         =>"certapia"
                                        ),
-                   /*T*/"Global Term Type"/*/T*/ => array (
+                   lang("Global Term Type") => array (
                                         "type"          =>"text",
-                                        "description"   =>/*T*/"The Term Type value (3 alphanumeric characters) identifies the application submitting the transaction.</br>The Global Payments Integration team will assign each integrated application a unique TermType during the certification process.</b>"/*/T*/,
+                                        "description"   =>lang("The Term Type value (3 alphanumeric characters) identifies the application submitting the transaction.</br>The Global Payments Integration team will assign each integrated application a unique TermType during the certification process.</b>"),
                                         "value"         =>""
                                        ),
-                    /*T*/"Demo Mode"/*/T*/ => array (
+                    lang("Demo Mode") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>/*T*/"Select YES if you want to set Global Payments into Demo Mode for testing. (<b>NOTE:</b> You must set to NO before accepting actual payments through this processor.)"/*/T*/,
+                                        "description"   =>lang("Select YES if you want to set Global Payments into Demo Mode for testing. (<b>NOTE:</b> You must set to NO before accepting actual payments through this processor.)"),
                                         "value"         =>"0"
                                        ),
-                   /*T*/"Accept CC Number"/*/T*/ => array (
+                   lang("Accept CC Number") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>/*T*/"Selecting YES allows the entering of CC numbers when using this plugin type. No will prevent entering of cc information"/*/T*/,
+                                        "description"   =>lang("Selecting YES allows the entering of CC numbers when using this plugin type. No will prevent entering of cc information"),
                                         "value"         =>"1"
                                        ),
-                   /*T*/"Visa"/*/T*/ => array (
+                   lang("Visa") => array (
                                         "type"          =>"yesno",
-                                        "description"   =>/*T*/"Select YES to allow Visa card acceptance with this plugin.  No will prevent this card type."/*/T*/,
+                                        "description"   =>lang("Select YES to allow Visa card acceptance with this plugin.  No will prevent this card type."),
                                         "value"         =>"0"
                                        ),
-                   /*T*/"MasterCard"/*/T*/ => array (
+                   lang("MasterCard") => array (
                                         "type"          =>"yesno",
-                                        "description"   =>/*T*/"Select YES to allow MasterCard acceptance with this plugin. No will prevent this card type."/*/T*/,
+                                        "description"   =>lang("Select YES to allow MasterCard acceptance with this plugin. No will prevent this card type."),
                                         "value"         =>"0"
                                        ),
-                   /*T*/"AmericanExpress"/*/T*/ => array (
+                   lang("AmericanExpress") => array (
                                         "type"          =>"yesno",
-                                        "description"   =>/*T*/"Select YES to allow American Express card acceptance with this plugin. No will prevent this card type."/*/T*/,
+                                        "description"   =>lang("Select YES to allow American Express card acceptance with this plugin. No will prevent this card type."),
                                         "value"         =>"0"
                                        ),
-                   /*T*/"Discover"/*/T*/ => array (
+                   lang("Discover") => array (
                                         "type"          =>"yesno",
-                                        "description"   =>/*T*/"Select YES to allow Discover card acceptance with this plugin. No will prevent this card type."/*/T*/,
+                                        "description"   =>lang("Select YES to allow Discover card acceptance with this plugin. No will prevent this card type."),
                                         "value"         =>"0"
                                        ),
-                   /*T*/"Invoice After Signup"/*/T*/ => array (
+                   lang("Invoice After Signup") => array (
                                         "type"          =>"yesno",
-                                        "description"   =>/*T*/"Select YES if you want an invoice sent to the customer after signup is complete."/*/T*/,
+                                        "description"   =>lang("Select YES if you want an invoice sent to the customer after signup is complete."),
                                         "value"         =>"1"
                                        ),
-                   /*T*/"Signup Name"/*/T*/ => array (
+                   lang("Signup Name") => array (
                                         "type"          =>"text",
-                                        "description"   =>/*T*/"Select the name to display in the signup process for this payment type. Example: eCheck or Credit Card."/*/T*/,
+                                        "description"   =>lang("Select the name to display in the signup process for this payment type. Example: eCheck or Credit Card."),
                                         "value"         =>"Credit Card"
                                        ),
-                   /*T*/"Dummy Plugin"/*/T*/ => array (
+                   lang("Dummy Plugin") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>/*T*/"1 = Only used to specify a billing type for a customer. 0 = full fledged plugin requiring complete functions"/*/T*/,
+                                        "description"   =>lang("1 = Only used to specify a billing type for a customer. 0 = full fledged plugin requiring complete functions"),
                                         "value"         =>"0"
                                        ),
-                   /*T*/"Auto Payment"/*/T*/ => array (
+                   lang("Auto Payment") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>/*T*/"No description"/*/T*/,
+                                        "description"   =>lang("No description"),
                                         "value"         =>"1"
                                        ),
-                   /*T*/"30 Day Billing"/*/T*/ => array (
+                   lang("30 Day Billing") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>/*T*/"Select YES if you want ClientExec to treat monthly billing by 30 day intervals.  If you select NO then the same day will be used to determine intervals."/*/T*/,
+                                        "description"   =>lang("Select YES if you want ClientExec to treat monthly billing by 30 day intervals.  If you select NO then the same day will be used to determine intervals."),
                                         "value"         =>"0"
                                        ),
-                   /*T*/"Check CVV2"/*/T*/ => array (
+                   lang("Check CVV2") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>/*T*/"Select YES if you want to accept CVV2 for this plugin."/*/T*/,
+                                        "description"   =>lang("Select YES if you want to accept CVV2 for this plugin."),
                                         "value"         =>"1"
                                        )
         );
