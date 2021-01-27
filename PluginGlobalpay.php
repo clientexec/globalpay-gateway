@@ -69,7 +69,7 @@ class PluginGlobalpay extends GatewayPlugin
                                        ),
                    lang("Invoice After Signup") => array (
                                         "type"          =>"yesno",
-                                        "description"   =>lang("Select YES if you want an invoice sent to the customer after signup is complete."),
+                                        "description"   =>lang("Select YES if you want an invoice sent to the client after signup is complete."),
                                         "value"         =>"1"
                                        ),
                    lang("Signup Name") => array (
@@ -79,18 +79,13 @@ class PluginGlobalpay extends GatewayPlugin
                                        ),
                    lang("Dummy Plugin") => array (
                                         "type"          =>"hidden",
-                                        "description"   =>lang("1 = Only used to specify a billing type for a customer. 0 = full fledged plugin requiring complete functions"),
+                                        "description"   =>lang("1 = Only used to specify a billing type for a client. 0 = full fledged plugin requiring complete functions"),
                                         "value"         =>"0"
                                        ),
                    lang("Auto Payment") => array (
                                         "type"          =>"hidden",
                                         "description"   =>lang("No description"),
                                         "value"         =>"1"
-                                       ),
-                   lang("30 Day Billing") => array (
-                                        "type"          =>"hidden",
-                                        "description"   =>lang("Select YES if you want ClientExec to treat monthly billing by 30 day intervals.  If you select NO then the same day will be used to determine intervals."),
-                                        "value"         =>"0"
                                        ),
                    lang("Check CVV2") => array (
                                         "type"          =>"hidden",
@@ -122,7 +117,7 @@ class PluginGlobalpay extends GatewayPlugin
             $isRefund = true;
             $TransType = 'Void';
             $cPlugin->setAction('refund');
-        }else{
+        } else {
             $isRefund = false;
             $TransType = 'Sale';
             $cPlugin->setAction('charge');
@@ -132,14 +127,14 @@ class PluginGlobalpay extends GatewayPlugin
         $CCMonth       = mb_substr($params['userCCExp'], 0, 2);
         $CCYear        = mb_substr($params['userCCExp'], 5, 2);
         $invoiceAmount = $this->currencyFormat($this->settings->get('Default Currency'), $params['invoiceTotal']);
-        if($invoiceAmount['error']){
+        if ($invoiceAmount['error']) {
             $cPlugin->PaymentRejected($invoiceAmount['value']);
             return $invoiceAmount['value'];
         }
 
         $TermType = trim($params["plugin_globalpay_Global Term Type"]);
         $CVNum = "";
-        if($params["plugin_globalpay_Check CVV2"]){
+        if ($params["plugin_globalpay_Check CVV2"]) {
             $CVNum = trim($params["userCCCVV2"]);
         }
 
@@ -164,9 +159,9 @@ class PluginGlobalpay extends GatewayPlugin
         $postData = '';
         foreach ($arguments as $name => $value) {
             $name = urlencode($name);
-            if($value === true){
+            if ($value === true) {
                 $value = 'true';
-            }elseif($value === false){
+            } elseif ($value === false) {
                 $value = 'false';
             }
             $postData .= $name . '=' . urlencode($value) . '&';
@@ -187,37 +182,41 @@ class PluginGlobalpay extends GatewayPlugin
 
         CE_Lib::log(4, 'GlobalPay response: ' . $response);
 
-        if(is_a($response, 'CE_Error')){
+        if (is_a($response, 'CE_Error')) {
             CE_Lib::log(4, 'Error communicating with GlobalPay: ' . $response->getMessage());
             throw new Exception('Error communicating with GlobalPay: ' . $response->getMessage());
-        }elseif(!$response){
+        } elseif (!$response) {
             CE_Lib::log(4, 'Error communicating with GlobalPay: No response found.');
             throw new Exception('Error communicating with GlobalPay: No response found.');
-        }else{
+        } else {
             $response = XmlFunctions::xmlize($response);
         }
 
-        if($response && isset($response['Response']['#']['Result'][0]['#'])){
-            if($response['Response']['#']['Result'][0]['#'] == 0){
+        if ($response && isset($response['Response']['#']['Result'][0]['#'])) {
+            if ($response['Response']['#']['Result'][0]['#'] == 0) {
                 $cPlugin->setTransactionID($response['Response']['#']['PNRef'][0]['#']);
                 $cPlugin->setAmount($params['invoiceTotal']);
                 $cPlugin->setLast4(mb_substr($params['userCCNumber'], -4));
 
-                if($isRefund){
-                    $cPlugin->PaymentAccepted($params['invoiceTotal'],
-                                              "GlobalPay Gateway refund of ".$params['invoiceTotal']." was successfully processed.",
-                                              $response['Response']['#']['PNRef'][0]['#']);
-                }else{
-                    $cPlugin->PaymentAccepted($params['invoiceTotal'],
-                                              "GlobalPay Gateway payment of ".$params['invoiceTotal']." was accepted.",
-                                              $response['Response']['#']['PNRef'][0]['#']);
+                if ($isRefund) {
+                    $cPlugin->PaymentAccepted(
+                        $params['invoiceTotal'],
+                        "GlobalPay Gateway refund of ".$params['invoiceTotal']." was successfully processed.",
+                        $response['Response']['#']['PNRef'][0]['#']
+                    );
+                } else {
+                    $cPlugin->PaymentAccepted(
+                        $params['invoiceTotal'],
+                        "GlobalPay Gateway payment of ".$params['invoiceTotal']." was accepted.",
+                        $response['Response']['#']['PNRef'][0]['#']
+                    );
                 }
                 return array('AMOUNT' => $params['invoiceTotal']);
-            }else{
+            } else {
                 $cPlugin->PaymentRejected($response['Response']['#']['RespMSG'][0]['#']);
                 return 'There was an error in the gateway provider';
             }
-        }else{
+        } else {
             $cPlugin->PaymentRejected($this->user->lang("There was not response from GlobalPay. Please double check your information"));
             return $this->user->lang("There was not response from GlobalPay. Please double check your information");
         }
@@ -254,21 +253,21 @@ class PluginGlobalpay extends GatewayPlugin
             'JPY' => array(0,  ''), //Japan
             'KRW' => array(0,  '')  //South Korea
         );
-        if(!isset($supportedCurrencies[$currencyType])){
+        if (!isset($supportedCurrencies[$currencyType])) {
             return array(
                 'error' => true,
                 'value' => 'Currency ('.$currencyType.') is not supported.'
             );
         }
         $formatedCurrency = sprintf("%01.".$supportedCurrencies[$currencyType][0]."f", round($value, $supportedCurrencies[$currencyType][0]));
-        if($formatedCurrency == 0){
+        if ($formatedCurrency == 0) {
             return array(
                 'error' => true,
                 'value' => 'Amount must be a positive, non-zero value.'
             );
         }
         $formatedCurrency = number_format($formatedCurrency, $supportedCurrencies[$currencyType][0], $supportedCurrencies[$currencyType][1], '');
-        if(strlen($formatedCurrency) > 11){
+        if (strlen($formatedCurrency) > 11) {
             return array(
                 'error' => true,
                 'value' => 'Amount ('.$formatedCurrency.') is not supported. Supported up to 11 alphanumeric characters.'
@@ -280,4 +279,3 @@ class PluginGlobalpay extends GatewayPlugin
         );
     }
 }
-?>
