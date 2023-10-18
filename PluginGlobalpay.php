@@ -126,7 +126,7 @@ class PluginGlobalpay extends GatewayPlugin
         $globalPay_url = "https://".trim($params["plugin_globalpay_Global Environment Name"]).".globalpay.com/GlobalPay/transact.asmx/ProcessCreditCard";
         $CCMonth       = mb_substr($params['userCCExp'], 0, 2);
         $CCYear        = mb_substr($params['userCCExp'], 5, 2);
-        $invoiceAmount = $this->currencyFormat($this->settings->get('Default Currency'), $params['invoiceTotal']);
+        $invoiceAmount = $this->currencyFormat($params['userCurrency'], $params['invoiceTotal']);
         if ($invoiceAmount['error']) {
             $cPlugin->PaymentRejected($invoiceAmount['value']);
             return $invoiceAmount['value'];
